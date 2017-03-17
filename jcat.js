@@ -18,6 +18,11 @@ getNum : function(str){
 	return str.replace(/[^0-9]/ig,"");
 },
 
+// 获取字符串中的中文数字
+getNumZh : function(str){
+	return str.replace(/[^一二三四五六七八九十]/ig,"");
+},
+
 // 是否存在于数组
 inArray : function(item,arr,index){
 	for(var i = 0; i < arr.length; i++){
@@ -26,6 +31,16 @@ inArray : function(item,arr,index){
 		}
 	}
 	return index ? -1 : false;
+},
+
+// 取数组中n个数的唯一组合
+getRank:function(arr,num){
+	var r=[];
+	return function f(t,a,n){
+		if(0==n)return r.push(t.join(","));
+		for(var i=0,l=a.length;i<=l-n;i++)
+			f(t.concat(a[i]),a.slice(i+1),n-1)
+	}([],arr,num),r
 },
 
 // 是否空
@@ -88,6 +103,8 @@ url : function(name){
     if(r!=null) return unescape(r[2]);
     return null;
 }
+
+/*jcat ending*/
 
 }
 
