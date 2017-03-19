@@ -23,6 +23,16 @@ getNumZh : function(str){
 	return str.replace(/[^一二三四五六七八九十]/ig,"");
 },
 
+// 获取年份中文
+year_zh : function(year,type){
+	var s = year - 2008;
+	var sc = s % 12 - 1;
+	var sy = new Array("子鼠","丑牛","寅虎","卯兔","辰龙","巳蛇","午马","未羊","申猴","酉鸡","戌狗","亥猪");
+	var ss = sy[sc];
+	if(type) return ss.split('')[type];
+	return ss;
+},
+
 // 是否存在于数组
 inArray : function(item,arr,index){
 	for(var i = 0; i < arr.length; i++){
