@@ -66,6 +66,32 @@ isEmptyObject : function(obj){
 	return true;
 },
 
+random_limit : function(min,max,isInteger){
+	isInteger = isInteger===false ? false : true; // default true
+	var n = Math.random()*(max-min+1)+min;
+	return isInteger ? parseInt(n) : n;
+},
+
+random_range : function(){},
+
+random_array : function(arr,len){
+    var l = 0;
+    if(!len || len==0){
+        l = random_limit(1,arr.length);
+    }else if(len instanceof Array){
+        l = random_limit(len[0],len[1]);
+    }else{
+        l = len;
+    }
+    
+    var new_arr = [];
+    for(var i = 0; i < l; i++){
+        new_arr.push(arr.splice(random_limit(1,arr.length)-1,1)[0]);
+    }
+
+    return new_arr;
+},
+
 // 秒数转时分秒
 stime : function(s,h){
 	s = parseInt(s);
