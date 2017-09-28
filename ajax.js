@@ -31,23 +31,23 @@ var ajax = {
     do: function(_){
         if(!_) return;
         var 
-        type = _.type || this.options.type || 'GET',
-        data = _.data || this.options.data || {},
-        dataType = _.dataType || this.options.dataType || 'JSON',
+        type        = _.type        || this.options.type        || 'GET',
+        data        = _.data        || this.options.data        || {},
+        dataType    = _.dataType    || this.options.dataType    || 'JSON',
 
-        async = _.async || this.options.async || "true",
-        contentType = _.contentType || this.options.contentType || "application/x-www-form-urlencoded",
+        async       = _.async       || this.options.async       || 'true',
+        contentType = _.contentType || this.options.contentType || 'application/x-www-form-urlencoded',
 
-        url = _.url || this.options.url || '',
-        url_pre = _.url_pre || this.options.url_pre || '',
-        url_suf = _.url_suf || this.options.url_suf || '',
+        url         = _.url         || this.options.url         || '',
+        url_pre     = _.url_pre     || this.options.url_pre     || '',
+        url_suf     = _.url_suf     || this.options.url_suf     || '',
 
-        success = _.success || this.options.success,
+        success     = _.success     || this.options.success     || function(d){},
         success_pre = _.success_pre || this.options.success_pre || function(d){},
         success_suf = _.success_suf || this.options.success_suf || function(d){},
-        error = _.error || this.options.error,
-        beforeSend = _.beforeSend || this.options.beforeSend,
-        complete = _.complete || this.options.complete
+        error       = _.error       || this.options.error,
+        beforeSend  = _.beforeSend  || this.options.beforeSend,
+        complete    = _.complete    || this.options.complete
 
         // jQuery
         // $.ajax({
@@ -73,13 +73,15 @@ var ajax = {
         beforeSend();
         var xhr = ajaxCreateXmlHttpRequest();
         xhr.responseType = dataType;
-        xhr.open(type, url, async);
+        xhr.open(type, url_pre + url + url_suf, async);
         xhr.setRequestHeader("Content-Type", contentType);
         xhr.send(ajaxConvertData(data));
         xhr.onreadystatechange = function(){
             if(xhr.readyState == 4){
                 if(xhr.status == 200){
+                    success_pre(xhr.response)
                     success(xhr.response)
+                    success_suf(xhr.response)
                 }else{
                     error()
                 }
