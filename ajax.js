@@ -7,19 +7,19 @@ by k
 var ajax = {
     options: {
         success: function(d){
-            // console.log('=== ajax success ===')
-            // console.log(d)
+            console.log('=== ajax success ===')
+            console.log(d)
         },
         error: function(x, m){
-            // console.log('=== ajax error ===')
-            // console.log(m)
+            console.log('=== ajax error ===')
+            console.log(m)
         },
-        beforeSend: function(x){
-            // console.log('=== ajax before ===');
-            // console.log(x)
+        before: function(x){
+            console.log('=== ajax before ===');
+            console.log(x)
         },
         complete: function(){
-            // console.log('=== ajax complete ===');
+            console.log('=== ajax complete ===');
         }
     },
     set: function(_){
@@ -46,32 +46,12 @@ var ajax = {
         success_pre = _.success_pre || this.options.success_pre || function(d){},
         success_suf = _.success_suf || this.options.success_suf || function(d){},
         error       = _.error       || this.options.error,
-        beforeSend  = _.beforeSend  || this.options.beforeSend,
+        before      = _.before      || this.options.before,
         complete    = _.complete    || this.options.complete
 
-        // jQuery
-        // $.ajax({
-        //     type: type,
-        //     url: url_pre + url + url_suf,
-        //     data: data,
-        //     beforeSend: function(xhr){
-        //         beforeSend(xhr)
-        //     },
-        //     success: function (data) {
-        //         success_pre(data)
-        //         success(data)
-        //         success_suf(data)
-        //     },
-        //     error: function(xhr,msg){
-        //         error(xhr,msg)
-        //     },
-        //     complete: function(){
-        //         complete()
-        //     }
-        // });
 
-        beforeSend();
         var xhr = ajaxCreateXmlHttpRequest();
+        before(xhr);
         xhr.responseType = dataType;
         xhr.open(type, url_pre + url + url_suf, async);
         xhr.setRequestHeader("Content-Type", contentType);
@@ -83,7 +63,7 @@ var ajax = {
                     success(xhr.response)
                     success_suf(xhr.response)
                 }else{
-                    error()
+                    error(xhr,xhr.statusText)
                 }
                 complete()
             }
