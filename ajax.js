@@ -50,12 +50,12 @@ var ajax = {
         complete    = _.complete    || this.options.complete
 
 
-        var xhr = ajaxCreateXmlHttpRequest();
+        var xhr = this.ajaxCreateXmlHttpRequest();
         before(xhr);
         xhr.responseType = dataType;
         xhr.open(type, url_pre + url + url_suf, async);
         xhr.setRequestHeader("Content-Type", contentType);
-        xhr.send(ajaxConvertData(data));
+        xhr.send(this.ajaxConvertData(data));
         xhr.onreadystatechange = function(){
             if(xhr.readyState == 4){
                 if(xhr.status == 200){
@@ -68,28 +68,25 @@ var ajax = {
                 complete()
             }
         }
-    }
-}
+    },
 
-
-
-function ajaxCreateXmlHttpRequest(){
-    if(window.ActiveXObject){
-        return new ActiveXObject("Microsoft.XMLHTTP");
-    }else if(window.XMLHttpRequest){
-        return new XMLHttpRequest();
-    }
-}
-
-function ajaxConvertData(data){
-    if(typeof data === 'object'){
-        var convertResult = "" ;
-        for(var k in data){
-            convertResult += k + "=" + data[k] + "&";
+    ajaxCreateXmlHttpRequest: function(){
+        if(window.ActiveXObject){
+            return new ActiveXObject("Microsoft.XMLHTTP");
+        }else if(window.XMLHttpRequest){
+            return new XMLHttpRequest();
         }
-        convertResult = convertResult.substring(0, convertResult.length-1)
-        return convertResult;
-    }else{
-        return data;
+    },
+    ajaxConvertData: function(data){
+        if(typeof data === 'object'){
+            var convertResult = "" ;
+            for(var k in data){
+                convertResult += k + "=" + data[k] + "&";
+            }
+            convertResult = convertResult.substring(0, convertResult.length-1)
+            return convertResult;
+        }else{
+            return data;
+        }
     }
 }
