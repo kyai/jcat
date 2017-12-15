@@ -2,13 +2,13 @@
 jcat.js - A javascript helper.
 
 
-## ajax
+## jcat ajax
 *ajax通用方法，之后会集成到jcat.js*
 
 ### 使用说明
 - 引用文件
 
-		<script type="text/javascript" src="ajax.js"></script>
+		<script type="text/javascript" src="jcat.ajax.js"></script>
 
 - 方法列表
 
@@ -49,7 +49,7 @@ jcat.js - A javascript helper.
 	`complete` 请求完成时回调函数
 
 ### 代码示例
-	<script type="text/javascript" src="ajax.js"></script>
+	<script type="text/javascript" src="jcat.ajax.js"></script>
 	<script type="text/javascript">
 	//全局设置
 	ajax.set({

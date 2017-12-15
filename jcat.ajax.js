@@ -1,7 +1,6 @@
 
 /*
 Ajax common function
-by k
 */
 
 var ajax = {
